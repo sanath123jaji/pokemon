@@ -1,0 +1,15 @@
+<div *ngIf="pokemon" class="details-section">
+  <div class="pokemon-name-section">
+    <div class="back-page" (click)="goToPreviousPage()"><mat-icon>keyboard_backspace</mat-icon></div>
+    <div>{{pokemon?.name ? (pokemon?.name | titlecase) : '-'}}</div>
+    <div></div>
+  </div>
+  <mat-tab-group>
+    <mat-tab label="Details">
+      <app-pokemon-details [pokemon]="pokemon"></app-pokemon-details>
+    </mat-tab>
+    <mat-tab label="Evolution">
+      <app-pokemon-evolution></app-pokemon-evolution>
+    </mat-tab>
+  </mat-tab-group>
+</div>

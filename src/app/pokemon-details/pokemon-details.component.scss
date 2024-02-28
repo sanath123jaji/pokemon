@@ -1,0 +1,28 @@
+.detail-section {
+    margin: 20px;
+    width: 40vw;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19) !important;
+    ::ng-deep mat-card-header .mat-card-avatar {
+        background-size: cover;
+        background-position: center;
+        width: 196px !important;
+        height: 196px !important;
+        border-radius: 50%;
+    }
+
+    .stats-section {
+        font-size: 16px;
+    }
+
+    .stats-heading {
+        margin-top: 20px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+} 
+
+.card-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}

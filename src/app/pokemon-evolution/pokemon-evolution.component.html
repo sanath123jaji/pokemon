@@ -1,0 +1,14 @@
+<div class="evolution-container" *ngIf="evolutionChain?.length">
+    <div *ngFor="let stage of evolutionChain; let i = index" class="evolution-stage">
+      <img [src]="stage.image" [alt]="stage.speciesName" class="pokemon-image">
+      <div class="pokemon-info">
+        <div class="pokemon-name">{{ stage.speciesName | titlecase }}</div>
+        <div class="pokemon-details">
+          <span>Min Level: {{ stage.minLevel }}</span>
+          <span>Trigger: {{ stage.triggerName | titlecase }}</span>
+        </div>
+      </div>
+      <!-- <div *ngIf="i < evolutionChain.length - 1" class="arrow">→</div> -->
+    </div>
+  </div>
+  
