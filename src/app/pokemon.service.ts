@@ -28,7 +28,6 @@ export class PokemonService {
 
   getPokemonEvolutionChain(evolutionUrl: string): Observable<any> {
     return this.http.get<any>(evolutionUrl);
-    // return this.http.get<any>(`https://pokeapi.co/api/v2/evolution-chain/${pokemonId}`)
   }
 
   getPokemonDetailsByName(name: string): Observable<any> {
