@@ -19,7 +19,7 @@ export class DetailViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      const pokemonId = params['id'];
+      const pokemonId = +params['id'];
       this.pokemonService.getPokemonDetails(pokemonId).subscribe(data => {
         this.pokemon = data;
         console.log('pokemon',this.pokemon);
