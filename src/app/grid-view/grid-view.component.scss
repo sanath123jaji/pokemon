@@ -17,23 +17,23 @@
   .grid-item img {
     width: auto; 
     height: auto; 
-    max-width: 100px; /* Set a maximum width */
-    max-height: 19vh; /* Set a maximum height based on screen height */
-    margin-bottom: 10px; /* Add some space between the image and the text */
+    max-width: 100px;
+    max-height: 19vh; 
+    margin-bottom: 10px;
   }
   
   .mat-paginator {
-    background-color: transparent; /* Remove the background color */
-    color: black; /* Change the font color to black */
+    background-color: transparent; 
+    color: black; 
   }
   
   .mat-paginator .mat-icon-button {
-    color: black; /* Change the color of the buttons */
+    color: black; 
   }
 
   .mat-paginator .mat-icon-button[disabled] {
-    color: rgba(0, 0, 0, 0.38); /* Change the color to a lighter shade */
-    cursor: not-allowed; /* Change the cursor to indicate the button is disabled */
+    color: rgba(0, 0, 0, 0.38); 
+    cursor: not-allowed; 
   }  
   
   .spinner-section {

@@ -25,36 +25,10 @@ export class PokemonEvolutionComponent implements OnInit {
     });
   }
 
-  // buildEvolutionChain(chain: any): void {
-  //   let currentStage = chain;
-  //   const evolutionDetailsRequests = [];
-  
-  //   while (currentStage && currentStage.species) {
-  //     evolutionDetailsRequests.push(
-  //       this.pokemonService.getPokemonDetailsByName(currentStage.species.name).pipe(
-  //         catchError(error => of(`Error fetching details for ${currentStage.species.name}`))
-  //       )
-  //     );
-  //     console.log('current stage',currentStage);
-  //     currentStage = currentStage.evolves_to.length ? currentStage.evolves_to[0] : null;
-  //   }
-  
-  //   forkJoin(evolutionDetailsRequests).subscribe(detailsArray => {
-  //     this.evolutionChain = detailsArray.map((details, index) => ({
-  //       speciesName: chain.evolves_to[index]?.species?.name || 'N/A',
-  //       minLevel: chain.evolves_to[index]?.evolution_details[0]?.min_level || 'N/A',
-  //       triggerName: chain.evolves_to[index]?.evolution_details[0]?.trigger?.name || 'unknown',
-  //       image: details.sprites?.front_default || 'default-image-path.png'
-  //     }));
-  //     console.log('sjhbj',this.evolutionChain);
-  //   });
-  // }
-
   buildEvolutionChain(chain: any): void {
     let currentStage = chain;
     const evolutionDetailsRequests = [];
   
-    // Push the base species first
     evolutionDetailsRequests.push(
       this.pokemonService.getPokemonDetailsByName(currentStage.species.name).pipe(
         catchError(error => of({ error: `Error fetching details for ${currentStage.species.name}`, species: currentStage.species }))
