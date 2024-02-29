@@ -1,5 +1,5 @@
 <div class="evolution-container" *ngIf="evolutionChain?.length">
-    <div *ngFor="let stage of evolutionChain; let i = index" class="evolution-stage">
+    <div *ngFor="let stage of evolutionChain; let i = index" (click)="openDetailTab(stage?.id)" class="evolution-stage" [ngClass]="selectedPokemonID == stage?.id ? 'highlight-card' : ''">
       <img [src]="stage.image" [alt]="stage.speciesName" class="pokemon-image">
       <div class="pokemon-info">
         <div class="pokemon-name">{{ stage.speciesName | titlecase }}</div>

@@ -11,6 +11,7 @@ export class DetailViewComponent implements OnInit {
   selectedTab: string = 'details';
   pokemon: any;
   evolutionChain: any;
+  selectedTabIndex = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -20,9 +21,9 @@ export class DetailViewComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const pokemonId = +params['id'];
+      this.selectedTabIndex = 0;
       this.pokemonService.getPokemonDetails(pokemonId).subscribe(data => {
         this.pokemon = data;
-        console.log('pokemon',this.pokemon);
       });
     });
   }

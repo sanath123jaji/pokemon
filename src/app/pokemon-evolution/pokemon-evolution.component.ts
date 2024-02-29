@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PokemonService } from '../pokemon.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, forkJoin, of } from 'rxjs';
 
 @Component({
@@ -11,12 +11,14 @@ import { catchError, forkJoin, of } from 'rxjs';
 export class PokemonEvolutionComponent implements OnInit {
 
   evolutionChain: any[] = [];
+  selectedPokemonID : any;
 
-  constructor(private pokemonService : PokemonService, private route: ActivatedRoute,) { }
+  constructor(private pokemonService : PokemonService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const pokemonId = params['id'];
+      this.selectedPokemonID = pokemonId;
       this.pokemonService.getPokemonSpecies(pokemonId).subscribe((data:any) => {
         this.pokemonService.getPokemonEvolutionChain(data?.evolution_chain?.url).subscribe((res:any) => {
           this.buildEvolutionChain(res.chain);
@@ -61,6 +63,7 @@ export class PokemonEvolutionComponent implements OnInit {
   
         return {
           speciesName: details?.species?.name || 'N/A',
+          id : details?.id,
           minLevel: evolutionDetails?.min_level || 'N/A',
           triggerName: evolutionDetails?.trigger?.name || 'unknown',
           image: details?.sprites?.front_default || 'default-image-path.png'
@@ -69,6 +72,8 @@ export class PokemonEvolutionComponent implements OnInit {
     });
   }
   
-  
+  openDetailTab(id:string){
+    this.router.navigate(['/pokemon', id])
+  }
   
 }

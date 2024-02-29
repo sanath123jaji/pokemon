@@ -4,6 +4,7 @@ import { PokemonEvolutionComponent } from './pokemon-evolution.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('PokemonEvolutionComponent', () => {
   let component: PokemonEvolutionComponent;
@@ -12,7 +13,7 @@ describe('PokemonEvolutionComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ PokemonEvolutionComponent ],
-      imports: [HttpClientModule,MatIconModule],
+      imports: [HttpClientModule,MatIconModule,RouterTestingModule],
       providers: [{
         provide: ActivatedRoute,
         useValue: {

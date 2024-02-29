@@ -14,3 +14,15 @@
 .details-section {
     margin-top: 3vh;
 }
+
+.spinner-section {
+    height: 40vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    ::ng-deep .mat-spinner circle {
+      stroke: #0075BE !important;
+    }
+}
