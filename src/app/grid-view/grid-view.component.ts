@@ -11,7 +11,7 @@ export class GridViewComponent implements OnInit {
   pokemons: any[] = [];
   currentPage: number = 1;
   totalPokemons: number = 0;
-  pageSize: number = 9; 
+  pageSize: number = 12; 
   showSpinner = true;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
