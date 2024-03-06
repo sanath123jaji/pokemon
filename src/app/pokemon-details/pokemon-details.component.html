@@ -10,8 +10,8 @@
         <ul class="stats-section">
           <li>Height: {{ pokemon.height }} </li>
           <li>Weight: {{ pokemon.weight }}</li>
-          <li>Abilities: {{getAbilities()}}</li>
-          <li>Types: {{ getTypes() }} </li>
+          <li>Abilities: {{getAbilities() | titlecase }}</li>
+          <li>Types: {{ getTypes() | titlecase }} </li>
         </ul>
       </div>
       <div>

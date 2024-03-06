@@ -33,7 +33,7 @@ export class PokemonEvolutionComponent implements OnInit {
   
     evolutionDetailsRequests.push(
       this.pokemonService.getPokemonDetailsByName(currentStage.species.name).pipe(
-        catchError(error => of({ error: `Error fetching details for ${currentStage.species.name}`, species: currentStage.species }))
+        catchError(error => of({ error: `Error fetching details for ${currentStage.species.name}`}))
       )
     );
   
@@ -41,7 +41,7 @@ export class PokemonEvolutionComponent implements OnInit {
       let nextStage = currentStage.evolves_to[0];
       evolutionDetailsRequests.push(
         this.pokemonService.getPokemonDetailsByName(nextStage.species.name).pipe(
-          catchError(error => of({ error: `Error fetching details for ${nextStage.species.name}`, species: nextStage.species }))
+          catchError(error => of({ error: `Error fetching details for ${nextStage.species.name}` }))
         )
       );
       currentStage = nextStage;

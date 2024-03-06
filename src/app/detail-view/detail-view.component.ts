@@ -28,21 +28,6 @@ export class DetailViewComponent implements OnInit {
     });
   }
 
-  extractEvolutionChain(chain: any): any[] {
-    let evolutions = [];
-    let current = chain;
-
-    while (current) {
-      evolutions.push({
-        name: current.species.name,
-        url: current.species.url
-      });
-      current = current.evolves_to.length > 0 ? current.evolves_to[0] : null;
-    }
-
-    return evolutions;
-  }
-
   goToPreviousPage(){
     history.back();
   }
