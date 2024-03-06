@@ -1,9 +1,9 @@
 <div class="grid-container" *ngIf="!showSpinner">
   <div *ngFor="let pokemon of pokemons" class="grid-item">
-    <a [routerLink]="['/pokemon', pokemon.id]">
+    <div [routerLink]="['/pokemon', pokemon.id]" class="pokemon-section">
       <img [src]="pokemon.image" alt="{{ pokemon.name }}">
       <p>{{ pokemon?.name ? (pokemon?.name | titlecase) : '-' }}</p>
-    </a>
+    </div>
   </div>
 </div>
 <div class="spinner-section" *ngIf="showSpinner">

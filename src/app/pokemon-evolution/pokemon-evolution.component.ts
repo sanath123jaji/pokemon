@@ -53,7 +53,7 @@ export class PokemonEvolutionComponent implements OnInit {
           return {
             speciesName: 'N/A',
             minLevel: 'N/A',
-            triggerName: 'unknown',
+            triggerName: 'N/A',
             image: 'default-image-path.png'
           };
         }
@@ -65,7 +65,7 @@ export class PokemonEvolutionComponent implements OnInit {
           speciesName: details?.species?.name || 'N/A',
           id : details?.id,
           minLevel: evolutionDetails?.min_level || 'N/A',
-          triggerName: evolutionDetails?.trigger?.name || 'unknown',
+          triggerName: evolutionDetails?.trigger?.name || 'N/A',
           image: details?.sprites?.front_default || 'default-image-path.png'
         };
       });
