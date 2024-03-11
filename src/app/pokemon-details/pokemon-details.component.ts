@@ -15,14 +15,14 @@ export class PokemonDetailsComponent implements OnInit {
   }
 
   getSpriteUrl(): string {
-    return this.pokemon.sprites?.other?.['official-artwork']?.front_default || '-';
+    return this.pokemon?.sprites?.other?.['official-artwork']?.front_default || '-';
   }
 
   getAbilities(){
-    return this.pokemon.abilities.map((a:any) => a.ability.name).join(', ') || '-';
+    return this.pokemon?.abilities?.map((a:any) => a.ability.name).join(', ') || '-';
   }
 
   getTypes(){
-    return this.pokemon.types.map((t:any) => t.type.name).join(', ');
+    return this.pokemon?.types?.map((t:any) => t.type.name).join(', ') || '';
   }
 }

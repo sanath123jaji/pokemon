@@ -21,7 +21,7 @@ export class PokemonEvolutionComponent implements OnInit {
       this.selectedPokemonID = pokemonId;
       this.pokemonService.getPokemonSpecies(pokemonId).subscribe((data:any) => {
         this.pokemonService.getPokemonEvolutionChain(data?.evolution_chain?.url).subscribe((res:any) => {
-          this.buildEvolutionChain(res.chain);
+          this.buildEvolutionChain(res?.chain);
         });
       });
     });
@@ -32,16 +32,16 @@ export class PokemonEvolutionComponent implements OnInit {
     const evolutionDetailsRequests = [];
   
     evolutionDetailsRequests.push(
-      this.pokemonService.getPokemonDetailsByName(currentStage.species.name).pipe(
-        catchError(error => of({ error: `Error fetching details for ${currentStage.species.name}`}))
+      this.pokemonService.getPokemonDetailsByName(currentStage?.species?.name).pipe(
+        catchError(error => of({ error: `Error fetching details for ${currentStage?.species?.name}`}))
       )
     );
   
-    while (currentStage.evolves_to && currentStage.evolves_to.length) {
-      let nextStage = currentStage.evolves_to[0];
+    while (currentStage?.evolves_to && currentStage?.evolves_to?.length) {
+      let nextStage = currentStage?.evolves_to[0];
       evolutionDetailsRequests.push(
-        this.pokemonService.getPokemonDetailsByName(nextStage.species.name).pipe(
-          catchError(error => of({ error: `Error fetching details for ${nextStage.species.name}` }))
+        this.pokemonService.getPokemonDetailsByName(nextStage?.species?.name).pipe(
+          catchError(error => of({ error: `Error fetching details for ${nextStage?.species?.name}` }))
         )
       );
       currentStage = nextStage;
@@ -49,7 +49,7 @@ export class PokemonEvolutionComponent implements OnInit {
   
     forkJoin(evolutionDetailsRequests).subscribe(detailsArray => {
       this.evolutionChain = detailsArray.map((details, index) => {
-        if (details.error) {
+        if (details?.error) {
           return {
             speciesName: 'N/A',
             minLevel: 'N/A',
@@ -58,19 +58,20 @@ export class PokemonEvolutionComponent implements OnInit {
           };
         }
   
-        const stage = index === 0 ? chain : chain.evolves_to[index - 1];
-        const evolutionDetails = stage?.evolution_details[0] || {};
+        const stage = index === 0 ? chain : chain?.evolves_to[index - 1];
+        const evolutionDetails = stage?.evolution_details?.length ? stage?.evolution_details[0] : {};
   
         return {
           speciesName: details?.species?.name || 'N/A',
-          id : details?.id,
+          id: details?.id,
           minLevel: evolutionDetails?.min_level || 'N/A',
-          triggerName: evolutionDetails?.trigger?.name || 'N/A',
+          triggerName: evolutionDetails?.trigger ? evolutionDetails?.trigger?.name : 'N/A',
           image: details?.sprites?.front_default || 'default-image-path.png'
         };
       });
     });
   }
+  
   
   openDetailTab(id:string){
     this.router.navigate(['/pokemon', id])

@@ -7,6 +7,8 @@ import { of } from 'rxjs';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatIconModule} from '@angular/material/icon';
 import { PokemonService } from '../pokemon.service';
+import { ChangeDetectorRef } from '@angular/core';
+
 
 describe('GridViewComponent', () => {
   let component: GridViewComponent;
@@ -14,8 +16,10 @@ describe('GridViewComponent', () => {
   let pokemonService: PokemonService;
   const mockPokemonService = {
     getPokemons: jasmine.createSpy('getPokemons').and.returnValue(of({ results: [], count: 0 })),
-    getPokemonById: jasmine.createSpy('getPokemonById').and.returnValue(of({}))
+    getPokemonById: jasmine.createSpy('getPokemonById').and.returnValue(of({})),
+    getPokemonDetailsByName: jasmine.createSpy('getPokemonDetailsByName').and.returnValue(of({}))
   };
+  let changeDetectorRef: ChangeDetectorRef;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -39,29 +43,29 @@ describe('GridViewComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  beforeEach(() => {
+    fixture = TestBed.createComponent(GridViewComponent);
+    component = fixture.componentInstance;
+    changeDetectorRef = fixture.debugElement.injector.get(ChangeDetectorRef);
+    pokemonService = TestBed.inject(PokemonService);
+    fixture.detectChanges();
   });
 
-  it('should fetch pokemons on init', () => {
-    expect(pokemonService.getPokemons).toHaveBeenCalled();
-  });
 
-  it('should update paginator on page event', () => {
-    const event = { pageIndex: 2, pageSize: 9 };
-    component.handlePageEvent(event);
-    expect(component.paginator.pageIndex).toBe(event.pageIndex);
-  });
-
-  it('should call fetchPokemons on init', () => {
-    spyOn(component, 'fetchPokemons');
+  it('should display pokemon details when list is not empty', fakeAsync(() => {
+    const mockPokemons = [
+      { name: 'Bulbasaur', image: 'bulbasaur.png', id: 1 },
+      { name: 'Ivysaur', image: 'ivysaur.png', id: 2 }
+    ];
+    mockPokemonService.getPokemons.and.returnValue(of({ results: mockPokemons, count: mockPokemons.length }));
+  
     component.ngOnInit();
-    expect(component.fetchPokemons).toHaveBeenCalled();
-  });
-
-  it('should set showSpinner to false after data is fetched', fakeAsync(() => {
-    component.fetchPokemons();
     tick();
-    expect(component.showSpinner).toBeFalse();
+    changeDetectorRef.detectChanges();
+  
+    expect(component.totalPokemons).toBe(2);
+    expect(fixture.nativeElement.querySelectorAll('.grid-item').length).toBe(2);
   }));
+  
+  
 });

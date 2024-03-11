@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { PokemonList } from './types';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PokemonService {
-  private baseUrl = 'https://pokeapi.co/api/v2/pokemon';
+  public baseUrl = 'https://pokeapi.co/api/v2/pokemon';
 
   constructor(private http: HttpClient) { }
 
   getPokemons(limit: number, offset: number) {
-    return this.http.get<any>(`${this.baseUrl}?limit=${limit}&offset=${offset}`);
+    return this.http.get<PokemonList>(`${this.baseUrl}?limit=${limit}&offset=${offset}`);
   }
 
   getPokemonById(id:any) {

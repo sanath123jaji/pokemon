@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PokemonService } from '../pokemon.service';
 import { MatPaginator } from '@angular/material/paginator';
+import { Observable, forkJoin, map, switchMap } from 'rxjs';
+import {PokemonData, PokemonList} from '../types';
 
 @Component({
   selector: 'app-grid-view',
@@ -8,7 +10,7 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrls: ['./grid-view.component.scss']
 })
 export class GridViewComponent implements OnInit {
-  pokemons: any[] = [];
+  pokemons$!: Observable<{ name: string; image: string; id: number }[]>;
   currentPage: number = 1;
   totalPokemons: number = 0;
   pageSize: number = 12; 
@@ -23,26 +25,28 @@ export class GridViewComponent implements OnInit {
   }
 
   fetchPokemons(): void {
-    this.pokemons = [];
-    this.pokemonService.getPokemons(this.pageSize, this.paginator?.pageIndex * this.pageSize).subscribe(data => {
-      const results = data?.results;
-      this.totalPokemons = data?.count;
-      this.pokemons = results.map((pokemon:any) => {
-        return this.pokemonService.getPokemonById(pokemon.name).toPromise();
-      });
-      Promise.all(this.pokemons).then(pokemonDetails => {
-        this.pokemons = pokemonDetails.map(detail => {
+    this.showSpinner = true;
+    this.pokemons$ = this.pokemonService.getPokemons(this.pageSize, this.paginator?.pageIndex * this.pageSize).pipe(
+      map((data:PokemonList) => {
+        this.totalPokemons = data?.count;
+        return data?.results;
+      }),
+      switchMap(results => {
+        return forkJoin(
+          results.map((pokemon:{ name: string; url: string }) => this.pokemonService.getPokemonDetailsByName(pokemon.name))
+        );
+      }),
+      map((pokemonDetails: PokemonData[]) => {
+        return pokemonDetails.map(detail => {
           return {
-            name: detail.name,
-            image: detail.sprites.other.dream_world.front_default,
+            name: detail.name || 'N/A',
+            image: detail?.sprites?.other?.dream_world?.front_default || '',
             id: detail?.id
           };
         });
-      });
-      this.showSpinner = false;
-    },err => {
-      console.log('err',err);
-    });
+      })
+    );
+    this.showSpinner = false;
   }
 
   handlePageEvent(event: any): void {
